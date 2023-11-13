@@ -1,0 +1,119 @@
+﻿@model SimpleAuthentication.Models.RegisterViewModel
+@{
+    ViewBag.Title = "Sign Up";
+}
+
+<div class="centerBlock w3-centered w3-white" style="padding: 70px 16px">
+    <div class="row">
+        <div class="col-md-7 centerBlock" >
+            @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            {
+                @Html.AntiForgeryToken()
+                <h3 class="text-center"><b>SIGN UP</b></h3>
+                <p class="text-center">Already have an account? @Html.ActionLink("Log in", "Login", null, new { @class = "link" })</p>
+                <hr />
+                //if want to display all the vallidation messages on top, uncomment the following, then comment each ValidationMessageFor
+                @*@Html.ValidationSummary("", new { @class = "text-danger" })*@
+                <div class="col-md-10 center-block" style="float:none">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Username, new { @class = "col-md-4 control-label required" })
+                        <div class="col-md-8">
+                            @Html.Kendo().TextBoxFor(m => m.Username)
+                            @Html.ValidationMessageFor(m => m.Username, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Email, new { @class = "col-md-4 control-label required" })
+                        <div class="col-md-8">
+                            @Html.Kendo().TextBoxFor(m => m.Email)
+                            @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-4 control-label required" data-toggle="tooltip" data-placement="right" title="Password must be at least 6 characters which includes digits and lowercase letters.">
+                            @Html.LabelFor(m => m.Password) <i class="glyphicon glyphicon-info-sign textTeal"></i>
+                        </div>
+                        <div class="col-md-8">
+                            @Html.Kendo().TextBoxFor(m => m.Password).HtmlAttributes(new { type = "password" })
+                            @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-4 control-label required" })
+                        <div class="col-md-8">
+                            @Html.Kendo().TextBoxFor(m => m.ConfirmPassword).HtmlAttributes(new { type = "password" })
+                            @Html.ValidationMessageFor(m => m.ConfirmPassword, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Name, new { @class = "col-md-4 control-label required" })
+                        <div class="col-md-8">
+                            @Html.Kendo().TextBoxFor(m => m.Name)
+                            @Html.ValidationMessageFor(m => m.Name, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Gender, new { @class = "col-md-4 control-label required" })
+                        <div class="col-md-8">
+                            @Html.Kendo().RadioButtonFor(m => m.Gender).Value("Male").Label("Male")<span style="padding-right:10px"></span>
+                            @Html.Kendo().RadioButtonFor(m => m.Gender).Value("Female").Label("Female")<br />
+                            @Html.ValidationMessageFor(m => m.Gender, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-4 col-md-8" style="font-size:12px">
+                            By clicking on Sign up, you agree to our <span style="cursor:pointer" onclick="document.getElementById('terms').style.display='block'" class="link">Terms and Conditions of Use</span>.
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-4 col-md-8">
+                            <input type="submit" value="Sign Up" class="k-button" />
+                        </div>
+                    </div>
+
+                </div>
+            }
+        </div>
+    </div>
+
+</div>
+<!-- Terms and Conditions Modal -->
+<div id="terms" class="w3-modal">
+    <div class="w3-modal-content w3-animate-zoom">
+        <div class="w3-container w3-display-container textWhite" style="background-color:#363940">
+            <span onclick="document.getElementById('terms').style.display='none'" class="w3-button w3-display-topright w3-large">x</span>
+            <h3>Terms and Conditions of Use</h3>
+        </div>
+        <div class="w3-container">
+            You are <b>restricted</b> from all of the following:
+            <ul>
+                <li>
+                    Publishing and using the website material.
+                </li>
+                <li>
+                    Selling, sublicensing and/or commercializing any Website material.
+                </li>
+                <li>
+                    Using this website in a way that will cause damage to this Website.
+                </li>
+                <li>
+                    Engaging in any data mining about this website.
+                </li>
+                <li>
+                    Using this website to engage in any advertising or marketing.
+                </li>   
+            </ul>
+
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+<script>
+    $(document).ready(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+
+    });
+</script>

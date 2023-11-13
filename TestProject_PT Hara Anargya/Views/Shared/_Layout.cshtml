@@ -1,0 +1,143 @@
+﻿@using Microsoft.AspNet.Identity
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A powerful, useful, responsive, ideal online exam web portal for your school">
+    <meta name="keywords" content="asp.net online exam, school online exam, school announcement, exam">
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/kendo/css")
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/kendo")
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="shortcut icon" href="~/favicon.png" type="image/x-icon" /> <!--browser's tab icon-->
+    <style>
+        body{
+            padding: 0;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- !PAGE CONTENT! -->
+    <div class="w3-main " style="margin-left:0;margin-right:0;margin-top:30px;padding:0;margin-bottom:0">
+
+        <!-- Navbar (sit on top) -->
+        <div class="w3-top">
+            <div class="w3-bar w3-card" id="myNavbar" style="background-color:#363940">
+                <a href="/Home/Index" class="w3-bar-item w3-button w3-wide"><img src="~/Images/logo.png" class="img-responsive center-block logoTopNavBar" /></a>
+                <!-- Right-sided navbar links -->
+                <div class="w3-right w3-hide-small">
+                    @if (Request.IsAuthenticated)
+                    {
+                        using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+                        {
+                            @Html.AntiForgeryToken()
+
+                            <div class="w3-dropdown-hover w3-hide-small" style="padding-right:20px">
+                                <a class="w3-button" title="account" onclick="showSubMenu()">@User.Identity.GetUserName() <i class="fa fa-caret-down"></i></a>
+                                <div class="w3-dropdown-content w3-card-4 w3-bar-block" style="right:-5px" id="manageAccountMenu">
+                                    <a href="/Account/MyProfile" class="w3-bar-item w3-button @(ViewContext.RouteData.Values["Controller"].ToString() == "Account" && ViewContext.RouteData.Values["Action"].ToString() == "MyProfile" ? "activePage" : "")">My Profile</a>
+                                    <a href="/Account/EditProfile" class="w3-bar-item w3-button @(ViewContext.RouteData.Values["Controller"].ToString() == "Account" && ViewContext.RouteData.Values["Action"].ToString() == "EditProfile" ? "activePage" : "")">Edit Profile</a>
+                                    <a href="/Account/ChangePassword" class="w3-bar-item w3-button @(ViewContext.RouteData.Values["Controller"].ToString() == "Account" && ViewContext.RouteData.Values["Action"].ToString() == "ChangePassword" ? "activePage" : "")">Change Password</a>
+                                    <a href="javascript:document.getElementById('logoutForm').submit()" class="w3-bar-item w3-button w3-left-align">Log Out</a>
+                                </div>
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        <a href="/Account/Login" class="w3-bar-item w3-button @(ViewContext.RouteData.Values["Controller"].ToString() == "Account" && ViewContext.RouteData.Values["Action"].ToString() == "Login" ? "activePage" : "")" id="loginLink">LOGIN</a>
+                        <a href="/Account/Register" class="w3-bar-item w3-button @(ViewContext.RouteData.Values["Controller"].ToString() == "Account" && ViewContext.RouteData.Values["Action"].ToString() == "Register" ? "activePage" : "")" id="registerLink"> SIGN UP</a>
+                    }
+                </div>
+                            <!-- Hide right-floated links on small screens and replace them with a menu icon -->
+                            <a href="javascript:void(0)" class="w3-bar-item w3-button w3-right w3-hide-large w3-hide-medium" onclick="w3_open()">
+                                <i class="fa fa-bars"></i>
+                            </a>
+                        </div>
+        </div>
+
+        <!-- Sidebar on small screens when clicking the menu icon -->
+        <nav class="w3-sidebar w3-bar-block w3-black w3-card w3-animate-left w3-hide-medium w3-hide-large" style="display:none;z-index:3;width:200px;font-size:14px;" id="mySidebar">
+            <a href="javascript:void(0)" onclick="w3_close()" class="w3-bar-item w3-button w3-padding-16" style="font-size:14px">Close ×</a>
+            @if (Request.IsAuthenticated)
+            {
+                using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+                {
+                    @Html.AntiForgeryToken()
+
+                    <a href="#" class="w3-bar-item w3-button" onclick="displayItems()"><span>@User.Identity.GetUserName()</span> <i class="fa fa-sort-down" id="downIcon"></i><i class="fa fa-sort-asc" id="upIcon" style="display:none"></i></a>
+                    <div id="manageAccountItems" style="display:none">
+                        <a href="/Account/MyProfile" class="w3-bar-item w3-button w3-padding @(ViewContext.RouteData.Values["Controller"].ToString() == "Account" && ViewContext.RouteData.Values["Action"].ToString() == "MyProfile" ? "activePage" : "")">View Profile</a>
+                        <a href="/Account/EditProfile" class="w3-bar-item w3-button w3-padding @(ViewContext.RouteData.Values["Controller"].ToString() == "Account" && ViewContext.RouteData.Values["Action"].ToString() == "EditProfile" ? "activePage" : "")">Edit Profile</a>
+                        <a href="/Account/ChangePassword" class="w3-bar-item w3-button w3-padding @(ViewContext.RouteData.Values["Controller"].ToString() == "Account" && ViewContext.RouteData.Values["Action"].ToString() == "ChangePassword" ? "activePage" : "")">Change Password</a>
+                        <a href="javascript:document.getElementById('logoutForm').submit()" class="w3-bar-item w3-button w3-padding">Log Out</a>
+
+                    </div>
+                }
+            }
+            else
+            {
+                <a href="/Account/Login" onclick="w3_close()" class="w3-bar-item w3-button" id="loginLink">LOGIN</a>
+                <a href="/Account/Register" onclick="w3_close()" class="w3-bar-item w3-button" id="registerLink"> SIGN UP</a>
+            }
+        </nav>
+
+        <!-- Overlay effect when opening sidebar on small screens -->
+        <div class="w3-overlay w3-hide-large w3-animate-opacity" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
+
+        @RenderBody()
+
+       
+        <!-- End page content -->
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/kendo")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+    <script>
+        // Toggle between showing and hiding the sidebar
+        function w3_open() {
+            if (mySidebar.style.display === 'block') {
+                $('#mySidebar').hide();
+                $('#myOverlay').hide();
+            } else {
+                $('#mySidebar').show();
+                $('#myOverlay').show();
+            }
+        }
+        // Close the sidebar with the close button
+        function w3_close() {
+            $('#mySidebar').hide();
+            $('#myOverlay').hide();
+        }
+        function showSubMenu() {
+            $("#manageAccountMenu").slideDown("500", function () { });
+                $("#manageAccountMenu").show();
+        }
+        function displayItems() {
+            if ($("#manageAccountItems").is(":visible")) {
+                $("#manageAccountItems").slideUp("500", function () { });
+                $("#manageAccountItems").hide();
+                $("#downIcon").show();
+                $("#upIcon").hide();
+            }
+            else{
+                 $("#manageAccountItems").slideDown("500", function () { });
+                $("#manageAccountItems").show();
+                $("#downIcon").hide();
+                $("#upIcon").show();
+            }          
+        }
+    </script>
+</body>
+</html>
+
+

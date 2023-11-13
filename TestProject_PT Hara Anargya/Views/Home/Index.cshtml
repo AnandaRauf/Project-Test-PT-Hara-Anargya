@@ -1,0 +1,168 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+<style>
+    /* Full height image header */
+    .bgimg {
+        background-position: center;
+        background-size: cover;
+        background-image: url("/Images/banner.png");
+        min-height: 100%;
+    }
+</style>
+
+<!-- Header -->
+<header class="w3-container w3-text-white w3-center bgimg" style="padding:128px 16px">
+    <h1 class="w3-margin w3-jumbo"><b>DH Furniture Online Shop</b></h1>
+    <p class="w3-xlarge">Your Dream Home Found Here</p>
+    <div class="row col-md-7 centerBlock">
+        <div class="form-group has-feedback">
+            <input id="search" type="text" class="form-control k-textbox" placeholder="Search Product..." onkeyup="onSearchKeyUp()" />
+            <i class="glyphicon glyphicon-search form-control-feedback textGrey"></i>
+        </div>
+    </div>
+</header>
+
+<!-- Top 5 Section -->
+<div class="w3-container" style="padding:80px 16px" id="team">
+    <h3 class="w3-center">TOP 5 MOST POPULAR PRODUCTS</h3>
+    <p class="w3-center w3-large"><button class="k-button" style="width:auto">Shop Now</button></p>
+    <div class="w3-row-padding" style="margin-top:64px">
+        <div class="row">
+            <div class="col-md-2 col-md-offset-1">
+                <div class="w3-card">
+                    <img src="~/Images/LShapeSofa.png" alt="sofa" style="width:100%">
+                    <div class="w3-container">
+                        <h4>Modern L-Shape Sofa (5 Seats)</h4>
+                        <p class="textTeal"><b><i class="glyphicon glyphicon-tag"></i> USD 111</b></p>
+                        <p class="w3-opacity">209 Sold</p>
+                        <p>PVC Material, 2 Years Warranty, 3 Colors Available</p>
+                        <p><button class="w3-button w3-block text-capitalize"><i class="glyphicon glyphicon-shopping-cart"></i> Add To Cart</button></p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="w3-card">
+                    <img src="~/Images/MeetingRoomTableSet.png" alt="meetingroomset" style="width:100%">
+                    <div class="w3-container">
+                        <h4>Meeting Room Table Sets</h4>
+                        <p class="textTeal"><b><i class="glyphicon glyphicon-tag"></i> USD 107</b></p>
+                        <p class="w3-opacity">156 Sold</p>
+                        <p>Width: 160 cm, Height: 74 cm, Includes Chairs, 2 Variations</p>
+                        <p><button class="w3-button w3-block text-capitalize"><i class="glyphicon glyphicon-shopping-cart"></i> Add To Cart</button></p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="w3-card">
+                    <img src="~/Images/StudyDesk.png" alt="studydesk" style="width:100%">
+                    <div class="w3-container">
+                        <h4>Woodern Study Desk & Chairs</h4>
+                        <p class="textTeal"><b><i class="glyphicon glyphicon-tag"></i> USD 65</b></p>
+                        <p class="w3-opacity">111 Sold</p>
+                        <p>Stable, Simple Design, W100 * L50 * H74cm, Wood Material</p>
+                        <p><button class="w3-button w3-block text-capitalize"><i class="glyphicon glyphicon-shopping-cart"></i> Add To Cart</button></p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="w3-card">
+                    <img src="~/Images/Bed.png" alt="bed" style="width:100%">
+                    <div class="w3-container">
+                        <h4>Modern King Size Bed</h4>
+                        <p class="textTeal"><b><i class="glyphicon glyphicon-tag"></i> USD 113</b></p>
+                        <p class="w3-opacity">154 Sold</p>
+                        <p>Comfortable, Improve Your Sleep, Modern Design, 2 Years Warranty</p>
+                        <p><button class="w3-button w3-block text-capitalize"><i class="glyphicon glyphicon-shopping-cart"></i> Add To Cart</button></p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="w3-card">
+                    <img src="~/Images/Drawer.png" alt="drawer" style="width:100%">
+                    <div class="w3-container">
+                        <h4>Classic Woodern 6 Drawers</h4>
+                        <p class="textTeal"><b><i class="glyphicon glyphicon-tag"></i> USD 50</b></p>
+                        <p class="w3-opacity">220 Sold</p>
+                        <p>High Storage, L 790 * W 400 * H 800 mm, Smooth Pull-Out</p>
+                        <p><button class="w3-button w3-block text-capitalize"><i class="glyphicon glyphicon-shopping-cart"></i> Add To Cart</button></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<!-- Category Section -->
+<div class="w3-container w3-text-white" style="padding:80px 16px;background-color:#363940" id="category">
+    <h3 class="w3-center">CATEGORIES</h3>
+    <div class="w3-row-padding" style="margin-top:64px">
+        <div class="w3-col l3 m6">
+            <img src="~/Images/sofaCategory.png" style="width:100%" alt="sofa Category">
+            <p class="w3-xlarge text-uppercase text-center w3-white textGrey">sofa</p>
+        </div>
+        <div class="w3-col l3 m6">
+            <img src="~/Images/bedroomCategory.png" style="width:100%" alt="bedroom Category">
+            <p class="w3-xlarge text-uppercase text-center w3-white textGrey">bedroom</p>
+        </div>
+        <div class="w3-col l3 m6">
+            <img src="~/Images/kitchenCategory.png" style="width:100%" alt="kitchen Category">
+            <p class="w3-xlarge text-uppercase text-center w3-white textGrey">kitchen</p>
+        </div>
+        <div class="w3-col l3 m6">
+            <img src="~/Images/officeCategory.png" style="width:100%" alt="office Category">
+            <p class="w3-xlarge text-uppercase text-center w3-white textGrey">office</p>
+        </div>
+    </div>
+
+
+</div>
+
+<!-- Why Us Section -->
+<div class="w3-container" style="padding:80px 16px;" id="about">
+    <h3 class="w3-center">WHY CHOOSE US</h3>
+    <p class="w3-center w3-large">Key features of our company</p>
+    <div class="w3-row-padding w3-center" style="margin-top:64px">
+        <div class="w3-quarter">
+            <i class="fa fa-truck w3-margin-bottom w3-jumbo w3-center"></i>
+            <p class="w3-large">Free Shipping</p>
+            <p>We are providing free shipping for all transactions of above USD 250.</p>
+        </div>
+        <div class="w3-quarter">
+            <i class="fa fa-shield w3-margin-bottom w3-jumbo"></i>
+            <p class="w3-large">Product Warranty</p>
+            <p>All our products are secured with a minimum of one month warranty.</p>
+        </div>
+        <div class="w3-quarter">
+            <i class="fa fa-gift w3-margin-bottom w3-jumbo"></i>
+            <p class="w3-large">Free Gift</p>
+            <p>We offer a free gift for all the transactions of above USD 100.</p>
+        </div>
+        <div class="w3-quarter">
+            <i class="fa fa-cog w3-margin-bottom w3-jumbo"></i>
+            <p class="w3-large">Support</p>
+            <p>We provide low fees for product maintenance by our expert manufacturers.</p>
+        </div>
+    </div>
+</div>
+
+<!-- Footer -->
+<footer class="w3-center w3-padding-16 backgroundGrey w3-text-white">
+    <div class="w3-xlarge w3-section">
+        <a href="mailto:jycoding@outlook.com">
+            <i class="fa fa-envelope w3-hover-opacity"></i>
+        </a>
+        <a href="https://twitter.com/jycoding" target="_blank">
+            <i class="fa fa-twitter w3-hover-opacity"></i>
+        </a>
+    </div>
+    <p>Copyright <i class="fa fa-copyright"></i> 2020. Developed by J.Y.Coding</p>
+</footer>
+<script>
+    //triggered when enter key pressed for the search bar
+    function onSearchKeyUp() {
+
+    }
+</script>

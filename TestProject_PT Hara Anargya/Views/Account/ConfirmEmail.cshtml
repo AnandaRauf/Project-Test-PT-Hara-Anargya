@@ -1,0 +1,21 @@
+﻿@{
+    ViewBag.Title = "Confirm Email";
+}
+
+
+<div class="row row-container w3-padding-24">
+    <div class="col-md-12">
+        <div class="col-md-8 center-block" style="float:none;border-radius:20px;font-size:20px">
+            <div class="pabel panel-success k-shadow">
+                <div class="panel-heading text-center" style="border-bottom:1px solid green">
+                    <b>Email Confirmed Successfully <i class="fa fa-check-circle-o"></i></b>
+                </div>
+                <div class="panel-body" style="background-color:white">
+                    <p class="text-center">
+                        Thank you for confirming your email. Please @Html.ActionLink("Click here to Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" , @class="link" })
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

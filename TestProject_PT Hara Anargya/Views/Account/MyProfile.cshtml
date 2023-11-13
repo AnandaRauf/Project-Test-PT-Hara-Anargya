@@ -1,0 +1,84 @@
+﻿@model SimpleAuthentication.Models.MyProfileViewModel
+@{
+    ViewBag.Title = "My Profile";
+}
+<style>
+    .k-button{
+        width:50%;
+    }
+    .k-radio:disabled+.k-radio-label{
+        color:#000 !important;
+        font-weight:100;
+    }
+    #profilePic:hover{
+        -ms-transform: scale(1.7); /* IE 9 */
+        -webkit-transform: scale(1.7); /* Safari 3-8 */
+        transform: scale(1.7); 
+    }
+</style>
+<div class="centerBlock w3-centered w3-white" style="padding: 70px 16px">
+    <div class="row">
+        <div class="col-md-7 center-block form-horizontal" style="float:none">
+            <h3 class="text-center"><b>MY PROFILE</b></h3>
+            @if (TempData["ProfileUpdateSuccess"] != null)
+            {
+                <div id="successMessage" class="alert alert-success" role="alert">
+                    @TempData["ProfileUpdateSuccess"]
+                </div>
+            }
+            <hr />
+            <div class="text-center">
+                @if (!Model.ProfilePicture.IsEmpty())
+                {
+                    <img id="profilePic" src="~/Images/@Model.ProfilePicture" alt="avatar" class="avatar-image img-responsive center-block" style="width:90px;height:90px" />
+                }
+                else
+                {
+                    <img id="profilePicDefault" src="~/Images/profilepic.png" alt="avatar" class="avatar-image img-responsive center-block" style="width:90px;height:90px" />
+                }
+
+            </div>
+
+            <div class="col-md-10 center-block" style="float:none">
+
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Username, new { @class = "col-md-4 control-label" })
+                    <div class="col-md-8">
+                        @Html.DisplayFor(m => m.Username)
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Email, new { @class = "col-md-4 control-label" })
+                    <div class="col-md-8">
+                        @Html.DisplayTextFor(m => m.Email)
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Name, new { @class = "col-md-4 control-label" })
+                    <div class="col-md-8">
+                        @Html.DisplayFor(m => m.Name)
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Gender, new { @class = "col-md-4 control-label" })
+                    <div class="col-md-8">
+                        @Html.Kendo().RadioButtonFor(m => m.Gender).Enable(false).Value("Male").Label("Male")<span style="padding-right:10px"></span>
+                        @Html.Kendo().RadioButtonFor(m => m.Gender).Enable(false).Value("Female").Label("Female")<br />
+                        @Html.ValidationMessageFor(m => m.Gender, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-4 col-md-8">
+                        @Html.ActionLink("Edit Profile", "EditProfile", null, new { @class = "k-button" })
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    $('#successMessage').delay(1500).fadeOut(300);
+</script>

@@ -1,0 +1,154 @@
+﻿@model SimpleAuthentication.Models.MyProfileViewModel
+@{
+    ViewBag.Title = "Edit Profile";
+}
+<style>
+    .k-button {
+        width:auto;
+    }
+    /* X button for upload image preview*/
+    .k-file .k-upload-action{
+        margin-right:10px;
+    }
+</style>
+<div class="centerBlock w3-centered w3-white" style="padding: 50px 16px">
+    <div class="row">
+        <div class="col-md-7 centerBlock">
+            @using (Html.BeginForm("EditProfile", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.HiddenFor(m => m.Id)
+                <h3 class="text-center"><b>EDIT PROFILE</b></h3>
+                <hr />
+                <div class="text-center">
+                    @if (!Model.ProfilePicture.IsEmpty())
+                    {
+                        <img id="profilePic" src="~/Images/@Model.ProfilePicture" alt="avatar" class="avatar-image img-responsive center-block" style="width:90px;height:90px" />
+                    }
+                    else
+                    {
+                        <img id="profilePic" src="~/Images/profilepic.png" alt="avatar" class="avatar-image img-responsive center-block" style="width:90px;height:90px" />
+                    }
+
+                </div>     
+                <br />
+                <div class="col-md-10 center-block" style="float:none">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.ProfilePicture, new { @class = "col-md-4 control-label" })
+                        <div class="col-md-8">
+                            @(Html.Kendo().Upload()
+                                .Name("ProfilePicture")
+                                .Messages(mess=>mess.Select("Select Image"))
+                                .Multiple(false)
+                                .HtmlAttributes(new { aria_label = "files" })
+                                .Validation(validation => validation.AllowedExtensions(new string[] { ".jpeg", ".png", ".jpg" }))
+                                .Events(e => e.Select("validateFile"))
+                            )
+                            @Html.ValidationMessageFor(m => m.ProfilePicture, "", new { @class = "text-danger", id="validationMsg" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Username, new { @class = "col-md-4 control-label required" })
+                        <div class="col-md-8">
+                            @Html.Kendo().TextBoxFor(m => m.Username)
+                            @Html.ValidationMessageFor(m => m.Username, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Email, new { @class = "col-md-4 control-label required" })
+                        <div class="col-md-8">
+                            @Html.Kendo().TextBoxFor(m => m.Email)
+                            @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                           
+                            <div class="small"><i class="glyphicon glyphicon-info-sign"></i> Upon changing the email, you have to confirm the new email so that you can use the email to login to the system.</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Name, new { @class = "col-md-4 control-label required" })
+                        <div class="col-md-8">
+                            @Html.Kendo().TextBoxFor(m => m.Name)
+                            @Html.ValidationMessageFor(m => m.Name, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Gender, new { @class = "col-md-4 control-label required" })
+                        <div class="col-md-8">
+                            @Html.Kendo().RadioButtonFor(m => m.Gender).Value("Male").Label("Male")<span style="padding-right:10px"></span>
+                            @Html.Kendo().RadioButtonFor(m => m.Gender).Value("Female").Label("Female")<br />
+                            @Html.ValidationMessageFor(m => m.Gender, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-4 col-md-8">
+                            <input value="Submit" type="submit" class="k-button" />
+                            @Html.ActionLink("View Profile", "MyProfile", null, new { @class = "secondary-btn",@style="margin-left:10px" })
+                        </div>
+                    </div>
+
+                </div>
+            }
+        </div>
+    </div>
+
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+
+    function validateFile(e) {
+        var upload = $("#ProfilePicture").data("kendoUpload"),
+        files = upload.getFiles();
+        var errorMsgLabel = document.getElementById('validationMsg');
+        var fileInfo = e.files[0];
+            var wrapper = this.wrapper;
+        $.each(e.files, function () {
+            var currentFileName = this.name;
+            var currentFileUid = this.uid;
+            // check whether the file name contain special characters
+            if (!charCheck(currentFileName)) {
+                $('#validationMsg').css("display", "block");
+                errorMsgLabel.innerText = "The filename cannot contain any of the following characters: \" # % & * : < > ? \ / { } ~ | ' Please rename your file and try again. Otherwise, the avatar image will not be updated upon submit changes.";
+                e.preventDefault();
+                return;
+            }
+            // check whether file name already exists in database
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("ValidateUpload", "Account")',
+                data: { currentFileName: currentFileName },
+                cache: false,
+                success: function (response) {
+                    if (response) {
+                        errorMsgLabel.innerText = response;
+                        upload.removeFileByUid(currentFileUid);
+                    }
+                    else {
+                        var raw = fileInfo.rawFile;
+                        var reader = new FileReader();
+                        if (raw) {
+                            reader.onloadend = function () {
+                            var preview = $("<img class='image-preview'>").attr("src", this.result);
+                            wrapper.find(".k-file[data-uid='" + fileInfo.uid + "'] .k-file-extension-wrapper")
+                              .replaceWith(preview);
+                          };
+                          reader.readAsDataURL(raw);
+                        }
+                        return null;
+                    }
+                }
+            });
+        });
+    }
+    function charCheck(val) {
+        var chars = ['~', '#', '%', '&', '*', '{', '}', '\\', ':', '<', '>', '?', '/', '+', '|', '"', "'"];
+
+        for (var i = 0; i < chars.length; i++) {
+            if (val.indexOf(chars[i]) != -1) {
+                return false;
+            }
+        }
+        return true;
+    }
+</script>
