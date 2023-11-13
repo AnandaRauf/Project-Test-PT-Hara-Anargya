@@ -23,7 +23,7 @@ How to open Projects and Run Projects?:
 Contacts Me:
 
 1. Email: anandaraufm@gmail.com
-2. [Linkedin](https://www.linkedin.com/in/ananda-rauf-maududi-
+2. [Linkedin](https://www.linkedin.com/in/ananda-rauf-maududi-)
 3. [Instagram](https://www.instagram.com/anandaraufm00)
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
